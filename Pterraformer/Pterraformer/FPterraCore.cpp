@@ -111,7 +111,7 @@ void FPterraCore::processInput(GLFWwindow* window)
 
 void FPterraCore::start()
 {
-	// Shit code but good enough until it's all working
+	// Bad code but good enough until it's all working
 
 	renderer = new FBasicRenderer(camera);
 	FHeightmap* heightmap = new FHeightmap(TempVars::TerrainFile());
