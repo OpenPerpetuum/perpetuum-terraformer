@@ -1,0 +1,18 @@
+#version 400
+
+layout(location = 0) in vec4 in_Position;
+//layout(location = 1) in vec4 in_Color;
+
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 modelMatrix;
+
+out vec4 colour;
+
+void main(void)
+{
+	gl_Position = projectionMatrix * viewMatrix * modelMatrix * in_Position;
+	// Normalize the Y (unsigned short) and greyscale the height
+	// Y here is the value from the heightmap file
+	colour = vec4(in_Position.y / 65535, in_Position.y / 65535, in_Position.y / 65535, 1);
+}
