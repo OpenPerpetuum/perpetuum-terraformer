@@ -1,8 +1,31 @@
 #version 430 core
-in vec4 colour;
-out vec4 outputF;
-// I have no textures, do nothing
+
+uniform mat3 normalMatrix;
+uniform mat4 modelMatrix;
+
+uniform struct Light {
+	vec3 position;
+	vec3 intensity;
+	vec3 ambientCoefficient;
+} light;
+
+in vec4 fragVert;
+in vec3 fragNormal;
+in vec4 fragColour;
+
+out vec4 finalColour;
+
 void main()
 {
-	outputF = colour;
+	vec3 normal = normalize(normalMatrix * fragNormal);
+	vec3 fragPosition = vec3(modelMatrix * fragVert); // Calculate the location of this pixel
+	vec3 surfaceToLight = normalize(light.position - fragPosition); // Vector to the light source
+
+	float diffuseCoefficient = max(0.0, dot(normal, surfaceToLight));
+	vec3 diffuse = diffuseCoefficient * fragColour.xyz * light.intensity;
+	vec3 ambient = light.ambientCoefficient * fragColour.xyz * light.intensity;
+
+	vec3 linearColour = ambient + diffuse;
+	vec3 gamma = vec3(1.0/2.2);
+	finalColour = vec4(pow(linearColour, gamma), 1);
 }

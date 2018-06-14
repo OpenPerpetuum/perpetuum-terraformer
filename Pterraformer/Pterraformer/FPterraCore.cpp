@@ -61,9 +61,9 @@ bool FPterraCore::init()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
-	camera = new CFreeFlightCamera(1.f, glm::vec3(0.001f, 0.001f, 0.0f));
-	camera->SetPosition(glm::vec3(0.f, 1000.f, -50.f));
-	camera->LookAt(glm::vec3(0.f, 600.f, 100.f));
+	camera = new CFreeFlightCamera(100.f, glm::vec3(0.003f, 0.003f, 0.0f));
+	camera->SetPosition(glm::vec3(0.f, 10000.f, 0.f));
+	camera->LookAt(glm::vec3(0.f, 10000.f, 100.f));
 	camera->SetClipping(1.f, 100000000.f);
 	camera->SetFOV(45.f);
 	camera->SetViewport(0, 0, screenWidth, screenHeight);
@@ -84,7 +84,8 @@ bool FPterraCore::init()
 
 void FPterraCore::setFramebufferCallback(GLFWwindow* window, int width, int height)
 {
-	FramebufferSizeChanged = true;
+	if (width != 0 && height != 0)
+		FramebufferSizeChanged = true;
 }
 
 void FPterraCore::processInput(GLFWwindow* window)
@@ -128,6 +129,7 @@ void FPterraCore::start()
 			int w, h;
 			glfwGetWindowSize(window, &w, &h);
 			camera->SetViewport(0, 0, w, h);
+			FramebufferSizeChanged = false;
 		}
 
 		processInput(window);
@@ -149,7 +151,7 @@ void FPterraCore::start()
 		// Replace with actual FPS counter when UX is in
 		if (currentTime - previousTime >= 1.0f)
 		{
-			std::cout << frameCount << " fps" << std::endl;
+			//std::cout << frameCount << " fps" << std::endl;
 			frameCount = 0;
 			previousTime = currentTime;
 		}

@@ -58,20 +58,21 @@ void Shader::Initialize(std::string strVertexFile, std::string strFragmentFile)
 	glCompileShader(FragmentShaderId);
 	
 	int success = true;
-	char infoLog[512];
-
+	
 	glGetShaderiv(VertexShaderId, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
-		glGetShaderInfoLog(VertexShaderId, 512, nullptr, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+		char vertexLog[512];
+		glGetShaderInfoLog(VertexShaderId, 512, nullptr, vertexLog);
+		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << vertexLog << std::endl;
 	}
 
 	glGetShaderiv(FragmentShaderId, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
-		glGetShaderInfoLog(FragmentShaderId, 512, nullptr, infoLog);
-		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+		char fragLog[512];
+		glGetShaderInfoLog(FragmentShaderId, 512, nullptr, fragLog);
+		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << fragLog << std::endl;
 	}
 
 	// Next we create a program object to represent our shaders

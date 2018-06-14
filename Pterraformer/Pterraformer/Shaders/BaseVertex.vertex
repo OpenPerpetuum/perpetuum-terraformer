@@ -1,18 +1,20 @@
 #version 400
 
 layout(location = 0) in vec4 in_Position;
-//layout(location = 1) in vec4 in_Color;
+layout(location = 1) in vec3 in_Normal;
 
-uniform mat4 projectionMatrix;
-uniform mat4 viewMatrix;
-uniform mat4 modelMatrix;
+uniform mat4 mvpMatrix;
+uniform mat3 normalMatrix;
 
-out vec4 colour;
+out vec4 fragVert;
+out vec3 fragNormal;
+out vec4 fragColour;
 
 void main(void)
 {
-	gl_Position = projectionMatrix * viewMatrix * modelMatrix * in_Position;
-	// Normalize the Y (unsigned short) and greyscale the height
-	// Y here is the value from the heightmap file
-	colour = vec4(in_Position.y / 65535, in_Position.y / 65535, in_Position.y / 65535, 1);
+	fragNormal = in_Normal;
+	fragVert = in_Position;
+
+	gl_Position = mvpMatrix * in_Position;
+	fragColour = vec4(0.5, 0.5, 0.5, 1); //in_Position.y / 65535, in_Position.y / 65535, in_Position.y / 65535, 1);
 }

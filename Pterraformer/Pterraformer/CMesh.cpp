@@ -46,7 +46,7 @@ void CMesh::Bind()
 
 	// Texture Coord Data
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, vecSize, BUFFER_OFFSET(9 * sizeof(float)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, vecSize, BUFFER_OFFSET(6 * sizeof(float)));
 
 	glBindVertexArray(0);
 

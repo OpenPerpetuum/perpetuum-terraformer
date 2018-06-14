@@ -61,10 +61,13 @@ void CTerrain::UpdateMesh()
 			float newY = (float)heightmap->GetHeightAt(x, y);
 			float newX = x * 100.f;
 			float newZ = y * 100.f;
-			Mesh->vertices[vertIndex++] = Vertex(newX, newY, newZ);
+
+			Vertex v(newX, newY, newZ);
+			CalculateNormal(x, y, v);
+
+			Mesh->vertices[vertIndex++] = v;
 		}
 	}
-	
 	// Build the element index - only do this once per mesh as it is not destructable
 	// Why do this? Because when the mesh gets updated, you're changing an 48MB dataset, not a 300MB dataset :)
 	if (!initialised)
@@ -96,4 +99,28 @@ void CTerrain::UpdateMesh()
 		Mesh->Update();
 	
 	dirty = false;
+}
+
+void CTerrain::CalculateNormal(int x, int z, Vertex& v)
+{
+	if (x == 0)
+		x = 1;
+	else if (x == 2047)
+		x = 2046;
+
+	if (z == 0)
+		z = 1;
+	else if (z == 2047)
+		z = 2046;
+
+	float hLeft = heightmap->GetHeightAt(x - 1, z);
+	float hRight = heightmap->GetHeightAt(x + 1, z);
+	float hDown = heightmap->GetHeightAt(x, z + 1);
+	float hUp = heightmap->GetHeightAt(x, z - 1);
+	
+	glm::vec3 vector = glm::vec3(hLeft - hRight, 2.0f, hDown - hUp);
+	auto normal = glm::normalize(vector);
+	v.nx = normal.x;
+	v.ny = normal.y;
+	v.nz = normal.z;
 }

@@ -43,7 +43,7 @@ public:
 
 	CameraType GetMode();
 	void GetViewport(int &x, int &y, int &width, int &height);
-	void GetMatrices(glm::mat4 &projection, glm::mat4 &view, glm::mat4 &model);
+	void GetMatrices(glm::mat4 &projection, glm::mat4 &view, glm::mat4 &model, glm::mat4 &mvp);
 	void ModifySpeed(float changeInSpeed);
 protected:
 	CameraType cameraMode;

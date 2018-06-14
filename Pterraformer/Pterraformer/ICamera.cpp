@@ -101,11 +101,12 @@ void ICamera::GetViewport(int &x, int &y, int &width, int &height)
 	height = windowHeight;
 }
 
-void ICamera::GetMatrices(glm::mat4 &projection, glm::mat4 &view, glm::mat4 &model)
+void ICamera::GetMatrices(glm::mat4 &projection, glm::mat4 &view, glm::mat4 &model, glm::mat4 &mvp)
 {
 	projection = this->projection;
 	view = this->view;
 	model = this->model;
+	mvp = this->MVP;
 }
 
 void ICamera::ModifySpeed(float changeInSpeed)

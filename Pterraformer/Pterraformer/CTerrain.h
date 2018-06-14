@@ -11,7 +11,8 @@ public:
 	CTerrain(FHeightmap* Heightmap);
 	~CTerrain();
 	void UpdateMesh();
-	
+private:
+	void CalculateNormal(int x, int z, Vertex& v);
 public:
 	CMesh* Mesh;
 private:
