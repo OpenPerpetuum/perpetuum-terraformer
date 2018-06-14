@@ -49,7 +49,8 @@ void ICamera::UpdateView()
 		position += positionDelta;
 		lookAt = position + direction;
 		positionDelta = positionDelta * .8f; // Very basic frame-frame smoothing.
-		cameraPitch = cameraYaw = 0; // Reset the Pitch/Yaw. We don't want this continuing after we stop the mouse - makes it feel "goopy"
+		cameraPitch = cameraPitch * .8f;
+		cameraYaw = cameraYaw * .8f;
 	}
 
 	view = glm::lookAt(position, lookAt, cameraUp);

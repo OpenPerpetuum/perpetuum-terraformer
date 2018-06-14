@@ -42,7 +42,7 @@ void FBasicRenderer::Render(std::vector<CMesh>* meshes) const
 	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model)));
 	shader->SetMatrix3(normalMatrixId, 1, false, &normalMatrix[0][0]);
 
-	shader->SetUniform("light.position", glm::vec3(0.f, 10000.f, 0.f));
+	shader->SetUniform("light.position", glm::vec3(0.f, 100000.f, 0.f));
 	shader->SetUniform("light.intensity", glm::vec3(1, 1, 1)); // White light
 	shader->SetUniform("light.ambientCoefficient", glm::vec3(0.3, 0.3, 0.3));
 	// If we get GPU performance problems, enable culling here. There are so few tris it shouldn't be a problem though
